@@ -15,16 +15,33 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+	stringstream stream;
+	stream << convToLower(rawWords);
+	set<string> keywords;
+	string word;
 
+	while(stream >> rawWords){ //go through words (catch spaces)
+		word = "";
 
+		for(unsigned int i = 0; i < rawWords.size(); i++){ 
+			if(ispunct(rawWords[i])){  // if punctuation
+				if(word.size()> 1){ //if 2+ characters 
+					keywords.insert(word);
+				}
+			}
 
+			else{ 
+				word +=rawWords[i];
+			}
+		}
 
+		if(word.size() > 1){ //if final word is +2 characters
+			keywords.insert(word);
+		}
 
+	}
 
-
-
-
-
+	return keywords;
 }
 
 /**************************************************
@@ -55,3 +72,12 @@ std::string &rtrim(std::string &s) {
 std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
 }
+
+
+
+/*int main(){
+	string test = "hello";
+	parseStringToWords(test);
+	
+	return 0;
+}*/
